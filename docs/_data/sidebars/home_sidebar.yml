@@ -12,6 +12,18 @@ entries:
     - output: web,pdf
       title: Core
       url: core.html
+    - output: web,pdf
+      title: Screen
+      url: screen.html
+    - output: web,pdf
+      title: Pointer
+      url: pointer.html
+    - output: web,pdf
+      title: Keyboard
+      url: keyboard.html
+    - output: web,pdf
+      title: Video
+      url: video.html
     output: web
     title: expoco
   output: web

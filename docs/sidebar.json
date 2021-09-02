@@ -1,6 +1,10 @@
 {
   "expoco": {
     "Overview": "/",
-    "Core": "core.html"
+    "Core": "core.html",
+    "Screen": "screen.html",
+    "Pointer": "pointer.html",
+    "Keyboard": "keyboard.html",
+    "Video": "video.html"
   }
 }

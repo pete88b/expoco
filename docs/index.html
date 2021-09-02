@@ -1,13 +1,13 @@
 ---
 
-title: Project name here
+title: ExPoCo: Expression Pointer Control
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Summary description here."
-description: "Summary description here."
+summary: "This project attempts to find ways of controling your pointer (cursor) with as little mouse use as possible."
+description: "This project attempts to find ways of controling your pointer (cursor) with as little mouse use as possible."
 nb_path: "index.ipynb"
 ---
 <!--
@@ -31,7 +31,8 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This file will become your README and also the index of your documentation.</p>
+<h1 id="Coding-conventions">Coding conventions<a class="anchor-link" href="#Coding-conventions"> </a></h1><p><code>point</code>: 2 tuple or list. e.g. <code>(x, y)</code> or <code>[x,y]</code></p>
+<p><code>size</code>: 2 tuple or list. e.g. <code>screen_size = [screen_width, screen_height]</code></p>
 
 </div>
 </div>
@@ -44,57 +45,31 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>pip install your_project_name</code></p>
+<p><code>pip install expoco</code></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="How-to-use">How to use<a class="anchor-link" href="#How-to-use"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Fill me in please! Don't forget code examples:</p>
+<h1 id="Developers">Developers<a class="anchor-link" href="#Developers"> </a></h1><p>If you're working on a windows machine</p>
+
+<pre><code>git config --global core.autocrlf input</code></pre>
+<p>To setup a conda environment for local development</p>
+
+<pre><code>conda create -n expoco python==3.7 -y
+conda activate expoco
+pip install nbdev jupyterlab opencv-python
+cd github *** nav to where you want this project to live on your filesystem
+git clone https://github.com/pete88b/expoco.git
+cd expoco
+nbdev_install_git_hooks
+jupyter-lab</code></pre>
+<p>2021-09-01: I ran the above, then <code>pip freeze &gt; requirements.txt</code> to create requirements.txt</p>
 
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>2</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 </div>
  
 

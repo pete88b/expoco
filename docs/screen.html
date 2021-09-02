@@ -117,6 +117,51 @@ inheritance.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">200</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">67</span><span class="p">],</span> <span class="p">[</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">67</span><span class="p">],</span> <span class="mi">156</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="n">height</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">33</span><span class="p">],</span> <span class="p">[</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">50</span><span class="p">,</span> <span class="n">height</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">33</span><span class="p">],</span> <span class="mi">256</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="s2">&quot;zone: 0&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">102</span><span class="p">,</span><span class="mi">80</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_COMPLEX</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="s2">&quot;zone: 1&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">52</span><span class="p">,</span><span class="mi">47</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_COMPLEX</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="s2">&quot;zone: 2&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_COMPLEX</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">imencode</span><span class="p">(</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">image</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">

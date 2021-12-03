@@ -7,20 +7,21 @@ __all__ = ['save_state_dict', 'load_state_dict', 'NpBatchNorm1d', 'NpLinear', 'N
 from ..core import *
 from pathlib import Path
 import numpy as np
+import json
 
 # Cell
 def save_state_dict(path, state_dict, **training_info):
     "Saves `state_dict` and `training_info` to a new model directory"
-    model_id = now()
+    path, model_id = Path(path), now()
     output_path = path/f'model_{model_id}'
     output_path.mkdir()
-    log = LogFile(output_path/'model.log')
-    log('output_path:', output_path.resolve())
-    log('training_info:', training_info)
     file_name = output_path/'state_dict.npz'
-    log('file_name:', file_name)
+    metadata = dict(path=path_to_str(path), output_path=path_to_str(output_path),
+                    file_name=path_to_str(file_name), training_info=training_info)
+    with open(output_path/'metadata.json', 'w') as f: json.dump(metadata, f, indent=2)
     np.savez(file_name, **{k:state_dict[k].detach().cpu().numpy() for k in state_dict})
-    np.load(file_name) # check that we didn't need to pickle
+    with np.load(file_name) as _: pass # check that we didn't need to pickle
+    return output_path
 
 # Cell
 def load_state_dict(path):
@@ -76,7 +77,7 @@ def get_class_count(model):
 def load_tabular_model(path):
     "Load `state_dict.npz` from `path` (a model directory) and create a tabular model"
     state_dict = load_state_dict(path)
-    # TODO: this only works for the model config we used ... make it a bit more generic
+    # TODO: this only works for the model config we used ... TODO: make it a bit more generic
     return NpModel(NpBatchNorm1d(**get_dict_subset(state_dict, 'bn_cont')),
                    NpLinear(**get_dict_subset(state_dict, 'layers.0.0')),
                    NpReLU(),
@@ -93,7 +94,9 @@ def create_confusion_matrix(model, df, cont_names, y_name):
     confusion_matrix = np.zeros([class_count,class_count], dtype=int)
     output = model(df[cont_names].to_numpy())
     preds = np.argmax(output, axis=1)
-    targets = df[y_name].to_numpy(dtype=int)
+    _class_to_id = dict(AH=0, EE=1, NO_EXPRESSION=2, OO=3) # TODO: train tabular model, save class map in metadata
+    targets = _data[y_name].apply(lambda v: _class_to_id[v]).to_list()
+#     targets = df[y_name].to_numpy(dtype=int)
     for p,t in zip(preds, targets):
         confusion_matrix[t][p]+=1
     return confusion_matrix
@@ -103,7 +106,8 @@ def plot_confusion_matrix(model, df, cont_names, y_name):
     "Plot a confusion matrix using matplotlib"
     confusion_matrix = create_confusion_matrix(model, df, cont_names, y_name)
     class_count = get_class_count(model) # class_count might not be the same as len(class_ids)
-    class_ids, class_labels = VisemeConfig().get_class_ids_and_labels()
+    class_ids = [0,1,2,3] # TODO: train tabular model, save class map in metadata
+    class_labels = ['AH', 'EE', 'NO_EXPRESSION', 'OO']
     fig, ax = plt.subplots(figsize=(9,9))
     ax.matshow(confusion_matrix, cmap=plt.cm.Blues, alpha=0.8)
     # ax.xaxis.set_ticks_position('bottom') # must be after matshow
@@ -122,13 +126,15 @@ def plot_confusion_matrix(model, df, cont_names, y_name):
 # Cell
 def get_idxs_of_interest(model, df, cont_names, y_name, target_of_interest, pred_of_interest):
     "Indeces in `df` where `df[y_name]` had `target_of_interest` but the model predicted `pred_of_interest`"
-    viseme_config = VisemeConfig()
+    class_labels = ['AH', 'EE', 'NO_EXPRESSION', 'OO'] # TODO: train tabular model, save class map in metadata
     output = model(df[cont_names].to_numpy())
     preds = np.argmax(output, axis=1)
-    targets = df[y_name].to_numpy()
+    _class_to_id = dict(AH=0, EE=1, NO_EXPRESSION=2, OO=3) # TODO: train tabular model, save class map in metadata
+    targets = _data[y_name].apply(lambda v: _class_to_id[v]).to_numpy()
+#     targets = df[y_name].to_numpy()
     idxs = []
-    print('target_of_interest', viseme_config.get_class_label(target_of_interest),
-          'pred_of_interest', viseme_config.get_class_label(pred_of_interest))
+    print('target_of_interest', class_labels[target_of_interest],
+          'pred_of_interest', class_labels[pred_of_interest])
     print('overall accuracy', (targets==preds).sum() / len(targets))
     _filter = targets==target_of_interest
     print('accuracy for target_of_interest',(targets[_filter]==preds[_filter]).sum() / _filter.sum())

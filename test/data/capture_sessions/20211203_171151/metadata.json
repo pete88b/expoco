@@ -1,0 +1,11 @@
+{
+  "count": 5,
+  "stop_after": 5,
+  "path": "test/data/capture_sessions/20211203_171151",
+  "classes": "NO_EXPRESSION",
+  "capture_width": 640,
+  "capture_height": 480,
+  "start_date": "20211203_171156",
+  "comments": "creating test data",
+  "end_date": "20211203_171156"
+}

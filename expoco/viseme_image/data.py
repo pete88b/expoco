@@ -25,6 +25,7 @@ class ImageHelper:
     def __exit__(self, type, value, traceback):
         pass
     def read_image(self, file_name):
+        assert Path(file_name).is_file(), f'Failed to read image. {file_name} not found'
         return cv2.imread(str(file_name))
     def write_image(self, file_name, image):
         return cv2.imwrite(str(file_name), image)

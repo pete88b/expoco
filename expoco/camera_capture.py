@@ -23,9 +23,9 @@ def _countdown(video_capture, image_display_helper, classes):
         time.sleep(0.75)
 
 # Cell
-def capture_session(classes, stop_after, comments):
+def capture_session(classes, stop_after, comments, path='data'):
     "Run a video capture session"
-    path = Path(f'data/capture_sessions/{now()}')
+    path = Path(f'{path}/capture_sessions/{now()}')
     path.mkdir(parents=True, exist_ok=True)
     video_capture = cv2.VideoCapture(0)
     width, height = [int(video_capture.get(p)) for p in [cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT]]

@@ -12,13 +12,21 @@ from PIL import Image, ImageTk
 import win32api, win32con, time
 
 # Cell
+def _pointer_click(down, up, x=10, y=10):
+    "Send a pointer click to a specific position on the screen"
+    pointer_x_px, pointer_y_px = list(win32api.GetCursorPos())
+    win32api.SetCursorPos((x, y))
+    win32api.mouse_event(down, x, y)
+    win32api.mouse_event(up, x, y)
+    win32api.SetCursorPos((pointer_x_px, pointer_y_px))
+
 def pointer_left_click(x=10, y=10):
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y)
+    "Send a left pointer click to a specific position on the screen"
+    _pointer_click(win32con.MOUSEEVENTF_LEFTDOWN, win32con.MOUSEEVENTF_LEFTUP, x, y)
 
 def pointer_right_click(x=10, y=10):
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, x, y)
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, x, y)
+    "Send a right pointer click to a specific position on the screen"
+    _pointer_click(win32con.MOUSEEVENTF_RIGHTDOWN, win32con.MOUSEEVENTF_RIGHTUP, x, y)
 
 # Cell
 def get_pointer_position():

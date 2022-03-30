@@ -51,6 +51,9 @@ class ImageHelper:
     def face_crop(self, image, size=256):
         bbox = self.get_face_bounding_box(image)
         xmin, ymin, width, height = self.resize_face_bounding_box(bbox)
+        image_height = image.shape[0]
+        if ymin+height > image_height: # make sure we don't go off the bottom on the image
+            ymin = image_height-size
         return image[ymin:ymin+height, xmin:xmin+width]
 
 # Cell
@@ -78,8 +81,8 @@ def viseme_image_dataset_from_capture_sessions(
     for session_path in sorted(input_path.glob(glob_pattern)):
         with open(session_path/'metadata.json') as f:
             session_metadata = json.load(f)
-        metadata['session_metadata'].append(session_metadata)
         viseme_class = get_viseme_class(session_metadata)
+        viseme_class = session_metadata['classes'].replace(' ', '__')
         if viseme_class == change_y_from:
             viseme_class = change_y_to
         for capture_count in range(1, session_metadata['count']+1):

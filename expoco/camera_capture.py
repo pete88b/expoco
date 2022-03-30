@@ -52,7 +52,7 @@ def capture_session(classes, stop_after, comments, path='data'):
 
 # Cell
 def get_viseme_class(metadata, viseme_classes=['NO_EXPRESSION', 'OO', 'EE', 'AH', 'RANDOM_TALK']):
-    classes = metadata['classes'].split(' ')
+    classes = metadata['classes'].split(' ') # TODO: this should be called labels
     result = None
     for c in classes:
         if c in viseme_classes:
